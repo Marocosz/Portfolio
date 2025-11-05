@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =============================================
+    // DETECÇÃO DE MOBILE (NOVO CÓDIGO)
+    // =============================================
+    // Verifica se é um dispositivo de toque OU se a tela é estreita (tablet/celular)
+    const isMobile = ('ontouchstart' in window) || (window.innerWidth <= 1024);
+
+    if (isMobile) {
+        document.body.classList.add('mobile-device');
+    }
+    // =============================================
+
+    // =============================================
     // MÓDULO DO CURSOR CUSTOMIZADO (ATUALIZADO)
     // =============================================
     const cursorModule = (() => {
@@ -845,17 +856,24 @@ const navigationModule = (() => {
     })();
 
     // =============================================
-    // INICIALIZAÇÃO DOS MÓDULOS
+    // INICIALIZAÇÃO DOS MÓDULOS (MODIFICADA)
     // =============================================
-    cursorModule.init();
-    particleModule.init();
+
+    // Módulos LEVES - rodam sempre
     navigationModule.init();
     lazyLoadModule.init();
-    scrollAnimationModule.init();
-    imageAnimationModule.init();
-    contentAnimationModule.init();
-    timelineModule.init();
+    timelineModule.init(); // Animação da timeline é leve (baseada em CSS)
     toolsModule.init();
     projectsModule.init();
     themeSwitcherModule.init();
+    navigationModule.init(); // Corrigindo o bug do scroll-spy que fizemos antes
+
+    // Módulos PESADOS - Desativados em mobile
+    if (!isMobile) {
+        cursorModule.init();
+        particleModule.init();
+        scrollAnimationModule.init();
+        imageAnimationModule.init();
+        contentAnimationModule.init();
+    }
 });

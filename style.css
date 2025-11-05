@@ -1476,3 +1476,37 @@ button,
         margin-bottom: 5px;
     }
 }
+
+/* ============================================= */
+/* OTIMIZAÇÃO PARA MOBILE (DESATIVA ANIMAÇÕES) */
+/* ============================================= */
+
+/* 1. Esconde o cursor customizado e o canvas de fundo */
+.mobile-device .cursor,
+.mobile-device .cursor-follower,
+.mobile-device #particle-canvas {
+    display: none !important;
+}
+
+/* 2. Restaura o cursor padrão do navegador */
+.mobile-device * {
+    cursor: auto !important;
+}
+.mobile-device a,
+.mobile-device button,
+.mobile-device [data-section],
+.mobile-device .project-card,
+.mobile-device .tool-card,
+.mobile-device .filter-btn {
+    cursor: pointer !important;
+}
+
+/* 3. Força a exibição de elementos que seriam animados */
+/* Isso previne que fiquem invisíveis (opacity: 0) */
+.mobile-device .section-title,
+.mobile-device .image-to-animate,
+.mobile-device .smooth-slide-up {
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto !important; 
+}
