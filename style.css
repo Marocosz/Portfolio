@@ -422,9 +422,21 @@ button,
 }
 
 #hero .hero-subtitle {
+    margin-bottom: 10px;
     font-size: 1.3rem;
     color: rgb(var(--color-text-dark));
     letter-spacing: 3px;
+}
+
+/* Estilo para o link "Conecte-se comigo" na seção Hero */
+.hero-link {
+    text-decoration: none; /* Remove o sublinhado do link */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero-link:hover {
+    color: rgb(var(--color-primary)); /* Fica amarelo ao passar o mouse */
+    text-shadow: 0 0 10px rgba(var(--color-primary), 0.7); /* Adiciona um brilho */
 }
 
 .scroll-down-indicator {
@@ -454,6 +466,7 @@ button,
     font-size: 1.2rem;
     line-height: 1.8;
     margin-bottom: 20px;
+    text-align: justify;
 }
 
 #about .about-image-wrapper {
@@ -634,8 +647,10 @@ button,
 .shard h4 {
     font-family: var(--font-secondary);
     color: rgb(var(--color-primary));
-    font-size: 1.5rem;
     margin-bottom: 10px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .shard h4::before {
