@@ -232,44 +232,56 @@ document.addEventListener('DOMContentLoaded', () => {
         return { init };
     })();
 
-    // =============================================
-    // MÓDULO DE NAVEGAÇÃO E SCROLL
-    // =============================================
-    const navigationModule = (() => {
-        const navLinks = document.querySelectorAll('.main-nav li');
-        const sections = document.querySelectorAll('section');
+// =============================================
+// MÓDULO DE NAVEGAÇÃO E SCROLL (CORRIGIDO)
+// =============================================
+const navigationModule = (() => {
+    const navLinks = document.querySelectorAll('.main-nav li');
+    
+    const sections = document.querySelectorAll('section, footer#contact');
 
-        function setActiveLink() {
-            let currentSection = '';
-            const triggerPoint = window.innerHeight / 2;
+    function setActiveLink() {
+        let currentSection = '';
+        const triggerPoint = window.innerHeight / 2;
+
+        const scrollBottom = window.pageYOffset + window.innerHeight;
+        const totalHeight = document.documentElement.scrollHeight; 
+
+        // Se o scroll estiver a 5 pixels do fundo, força a ativação da última seção
+        if (scrollBottom >= totalHeight - 5) {
+            currentSection = sections[sections.length - 1].getAttribute('id');
+        } else {
+            // Senão, usa a lógica original
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (window.pageYOffset >= sectionTop - triggerPoint) {
                     currentSection = section.getAttribute('id');
                 }
             });
-            navLinks.forEach(link => {
-                const isActive = link.dataset.section === currentSection;
-                link.classList.toggle('active', isActive);
-            });
         }
 
-        function init() {
-            if (!navLinks || navLinks.length === 0) return;
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const sectionId = link.dataset.section;
-                    const sectionElement = document.getElementById(sectionId);
-                    if (sectionElement) {
-                        sectionElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
+        navLinks.forEach(link => {
+            const isActive = link.dataset.section === currentSection;
+            link.classList.toggle('active', isActive);
+        });
+    }
+
+    function init() {
+        if (!navLinks || navLinks.length === 0) return;
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const sectionId = link.dataset.section;
+                const sectionElement = document.getElementById(sectionId);
+                if (sectionElement) {
+                    sectionElement.scrollIntoView({ behavior: 'smooth' });
+                }
             });
-            window.addEventListener('scroll', setActiveLink);
-            setActiveLink();
-        }
-        return { init };
-    })();
+        });
+        window.addEventListener('scroll', setActiveLink);
+        setActiveLink(); // Garante o estado inicial correto
+    }
+    return { init };
+})();
 
     // =============================================
     // MÓDULO DE LAZY LOADING DE IMAGENS (ATUALIZADO)
